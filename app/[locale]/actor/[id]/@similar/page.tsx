@@ -1,89 +1,57 @@
-import Link from "next/link";
-import Image from "next/image";
+import { Award } from "lucide-react";
 
-export default async function SimilarPage({
+
+export default async function AwardsPage({
   params,
 }: {
-  params: Promise<{ id: string; locale: string }>;
+  params: Promise<{ id: string }>;
 }) {
-  const { id, locale } = await params;
+  const { id } = await params;
 
+  // ✅ fetch actor
   const res = await fetch(
-    "http://localhost:3000/api/actors",
+    `http://localhost:3000/api/actors/${id}`,
     { cache: "no-store" }
   );
 
   if (!res.ok) {
-    return <div className="text-gray-400">No data found</div>;
+    return <div className="text-gray-400">No awards found</div>;
   }
 
-  const actors = await res.json();
+  const actor = await res.json();
 
-  // ✅ current actor
-  const current = actors.find(
-    (a: any) => a.id.toString() === id
-  );
-
-  if (!current) {
-    return <div className="text-gray-400">Actor not found</div>;
+  if (!actor?.awards || actor.awards.length === 0) {
+    return <div className="text-gray-400">No awards available</div>;
   }
-
-  // ✅ SIMILAR LOGIC (by genre)
-  const similarActors = actors.filter(
-    (a: any) =>
-      a.id.toString() !== id &&
-      a.genres?.some((g: string) =>
-        current.genres?.includes(g)
-      )
-  );
 
   return (
-    <div>
-      <h3 className="text-lg font-semibold mb-4">
-        Similar to {current.name}
-      </h3>
+    <div className="grid gap-4">
 
-      {/* EMPTY STATE */}
-      {similarActors.length === 0 && (
-        <p className="text-gray-400">
-          No similar actors found
-        </p>
-      )}
+      {actor.awards.map((a: any, i: number) => (
+        <div
+          key={i}
+          className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 rounded-xl p-4 flex gap-4 hover:shadow-lg hover:shadow-black/30 transition"
+        >
+          <div className="bg-yellow-500/20 p-3 rounded-lg">
+            <Award className="text-yellow-500" />
+          </div>
 
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {similarActors.map((item: any) => (
-          <Link
-            key={item.id}
-            href={`/${locale}/actor/${item.id}`}
-          >
-            <div className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 rounded-xl overflow-hidden hover:scale-105 transition cursor-pointer">
+          <div>
+            <p className="font-semibold text-lg">
+              {a?.name || "Unknown Award"}
+            </p>
 
-              {/* IMAGE */}
-              <div className="relative h-[220px]">
-                <Image
-                  src={item.image || "/fallback.jpg"}
-                  alt={item.name}
-                  fill
-                  sizes="300px"
-                  className="object-cover"
-                />
-              </div>
+            <p className="text-gray-400 text-sm">
+              {a?.year || "—"} • {a?.category || "—"}
+            </p>
 
-              {/* INFO */}
-              <div className="p-3">
-                <h3 className="font-semibold text-white">
-                  {item.name}
-                </h3>
+            <p className="text-gray-300 text-sm mt-1">
+              Film: {a?.film || "N/A"}
+            </p>
+          </div>
+        </div>
+      ))}
 
-                <p className="text-gray-400 text-sm mt-1">
-                  {item.genres?.join(" • ") || "N/A"}
-                </p>
-              </div>
-
-            </div>
-          </Link>
-        ))}
-      </div>
     </div>
   );
 }
