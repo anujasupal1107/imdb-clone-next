@@ -3,6 +3,8 @@
 import { SlidersHorizontal, Star } from "lucide-react";
 import Link from "next/link";
 import SearchClient from "./searchClient";
+export const dynamic = "force-dynamic";
+
 
 export default function MovieList() {
   const movies = [
