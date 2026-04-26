@@ -1,18 +1,20 @@
 export async function getActor(id: string) {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      "http://localhost:3000";
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/actors/${id}`,
+      {
+        cache: "no-store",
+      }
+    );
 
-    const res = await fetch(`${baseUrl}/api/actors/${id}`, {
-      cache: "no-store", // 🔥 disables caching
-    });
-
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.error("API failed:", res.status);
+      return null;
+    }
 
     return res.json();
   } catch (error) {
-    console.error(error);
+    console.error("Fetch failed:", error);
     return null;
   }
 }
