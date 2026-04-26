@@ -13,6 +13,7 @@ import React from "react";
 import Link from "next/link";
 import WatchlistButton from "@/components/watchlistButton";
 import ReviewForm from "@/components/ReviewForm";
+export const dynamic = "force-dynamic";
 
 export default function MovieDetails({ params }: any) {
   const { id } = params;
