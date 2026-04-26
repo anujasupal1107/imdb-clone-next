@@ -3,7 +3,7 @@ import Image from "next/image";
 import PageWrapper from "@/components/PageWrapper";
 import FilmographyExplorer from "@/components/FilmographyExplorer";
 import { getMessages } from "@/lib/getMessages";
-import { getActor, Actor } from "@/lib/getActor"; // ✅ import type
+import { getActor, Actor } from "@/lib/getActor";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -57,6 +57,7 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
+      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -70,6 +71,7 @@ export default async function Page({ params }: { params: Params }) {
       />
 
       <PageWrapper>
+        {/* HERO */}
         <div className="relative w-full h-[320px] md:h-[400px] mb-8 rounded-xl overflow-hidden">
           <Image
             src="/cover.jpg"
@@ -106,7 +108,9 @@ export default async function Page({ params }: { params: Params }) {
           </div>
         </div>
 
+        {/* GRID */}
         <div className="grid md:grid-cols-3 gap-8">
+          {/* LEFT */}
           <div>
             <div className="sticky top-24 space-y-6">
               <div className="bg-zinc-900 p-6 rounded-xl">
@@ -126,6 +130,7 @@ export default async function Page({ params }: { params: Params }) {
                 </p>
               </div>
 
+              {/* SOCIAL */}
               <div className="bg-zinc-900 p-6 rounded-xl">
                 <h2 className="mb-4 text-white font-semibold">
                   {messages?.social}
@@ -151,12 +156,26 @@ export default async function Page({ params }: { params: Params }) {
                       🐦
                     </a>
                   )}
+                  {actor.socialMedia?.imdb && (
+                    <a
+                      href={actor.socialMedia.imdb}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="IMDb"
+                      className="text-yellow-400 font-bold text-lg bg-black px-2 py-1 rounded"
+                    >
+                      IMDb
+                    </a>
+
+                  )}
                 </div>
               </div>
             </div>
           </div>
 
+          {/* RIGHT */}
           <div className="md:col-span-2">
+            {/* BIO */}
             <section className="mb-10">
               <h2 className="text-2xl text-white font-bold mb-4">
                 {messages?.biography}
@@ -164,6 +183,33 @@ export default async function Page({ params }: { params: Params }) {
               <p className="text-gray-200">{actor.biography}</p>
             </section>
 
+            {/* AWARDS */}
+            {actor.awards && actor.awards.length > 0 && (
+              <section className="mb-10">
+                <h2 className="text-2xl text-white font-bold mb-4">
+                  Awards
+                </h2>
+
+                <div className="space-y-3">
+                  {actor.awards.map((award: any, index: number) => (
+                    <div
+                      key={index}
+                      className="bg-zinc-900 p-4 rounded-lg text-gray-200"
+                    >
+                      <p className="font-semibold text-white">
+                        🏆 {award.name}
+                      </p>
+                      <p>{award.category}</p>
+                      <p className="text-sm text-gray-400">
+                        {award.film} • {award.year}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* FILMOGRAPHY */}
             <section>
               <h2 className="text-2xl text-white font-bold mb-6">
                 {messages?.filmography}

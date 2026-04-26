@@ -1,6 +1,6 @@
 import { actors } from "@/lib/data";
 
-// ✅ Infer correct type from your data
+// ✅ Let TS infer everything automatically (no manual mismatch)
 export type Actor = (typeof actors)[number];
 
 export async function getActor(id: string): Promise<Actor | null> {
