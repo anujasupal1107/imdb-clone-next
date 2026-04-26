@@ -309,6 +309,7 @@ export default function MovieDetails({ params }: any) {
     },
 
   ];
+
   const movie = Movies.find((m) => m.id === Number(id)) || Movies[0];
 
   return (
