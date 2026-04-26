@@ -6,7 +6,7 @@ import Link from "next/link";
 const Toprated = () => {
   const movies = [
     {
-      id: 1,
+      id: 9,
       title: "The Shawshank Redemption",
       rating: 9.3,
       image:
@@ -16,7 +16,7 @@ const Toprated = () => {
       rank: 1,
     },
     {
-      id: 2,
+      id: 10,
       title: "The Godfather",
       rating: 9.2,
       image:
@@ -26,7 +26,7 @@ const Toprated = () => {
       rank: 2,
     },
     {
-      id: 3,
+      id: 11,
       title: "The Dark Knight",
       rating: 9.0,
       image:
