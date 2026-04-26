@@ -1,20 +1,17 @@
-export async function getActor(id: string) {
+import { actors } from "@/lib/data";
+
+// ✅ Automatically infer correct type from your data
+type Actor = (typeof actors)[number];
+
+export async function getActor(id: string): Promise<Actor | null> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/actors/${id}`,
-      {
-        cache: "no-store",
-      }
+    const actor = actors.find(
+      (a) => String(a.id) === String(id)
     );
 
-    if (!res.ok) {
-      console.error("API failed:", res.status);
-      return null;
-    }
-
-    return res.json();
+    return actor || null;
   } catch (error) {
-    console.error("Fetch failed:", error);
+    console.error("getActor error:", error);
     return null;
   }
 }
