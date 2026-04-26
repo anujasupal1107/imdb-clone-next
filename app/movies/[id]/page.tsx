@@ -49,7 +49,7 @@ export default async function MovieDetails({
       releaseDate: "1994-09-23",
       cast: [
         {
-          id: 1,
+          id: 15,
           name: "Tim Robbins",
           role: "Andy Dufresne",
           image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
@@ -81,7 +81,7 @@ export default async function MovieDetails({
       releaseDate: "1972-03-24",
       cast: [
         {
-          id: 1,
+          id: 16,
           name: "Marlon Brando",
           role: "Vito Corleone",
           image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
@@ -114,7 +114,7 @@ export default async function MovieDetails({
       releaseDate: "2008-07-18",
       cast: [
         {
-          id: 1,
+          id: 17,
           name: "Christian Bale",
           role: "Bruce Wayne / Batman",
           image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
