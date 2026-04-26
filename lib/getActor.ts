@@ -1,11 +1,13 @@
 export async function getActor(id: string) {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  try {
+    const res = await fetch(`/api/actors/${id}`, {
+      next: { revalidate: 60 },
+    });
 
-  const res = await fetch(`${baseUrl}/api/actors/${id}`, {
-    next: { revalidate: 60, tags: ["actor"] },
-    cache: "force-cache",
-  });
+    if (!res.ok) return null;
 
-  return res.json();
+    return res.json();
+  } catch {
+    return null;
+  }
 }
