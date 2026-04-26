@@ -1,28 +1,14 @@
 "use client";
-import { Search, SlidersHorizontal, Star } from "lucide-react";
-import React from "react";
+
+import { SlidersHorizontal, Star } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-import SearchClient from "./searchClient";
 
 export default function MovieList() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Movies</h1>
-
-      {/* ✅ FIX */}
-      <Suspense fallback={<p>Loading...</p>}>
-        <SearchClient />
-      </Suspense>
-      </div>
-
-  )
-
-const MovieList = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
-  const Movies = [
+
+  const movies = [
     {
       id: 1,
       title: "Dune: Part Two",
@@ -69,19 +55,24 @@ const MovieList = () => {
       genre: ["Crime", "Drama", "History"],
     },
   ];
+
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">
-          {search ? `Search Results for "${search}` : "Popular Movies"}
+          {search ? `Search Results for "${search}"` : "Popular Movies"}
         </h1>
+
         <button className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-xl hover:bg-gray-900 transition-colors">
-          <SlidersHorizontal /> Filters
+          <SlidersHorizontal />
+          Filters
         </button>
       </div>
 
+      {/* Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {Movies.map((movie) => (
+        {movies.map((movie) => (
           <Link key={movie.id} href={`/movie/${movie.id}`}>
             <div className="bg-gray-900 rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
               <div className="relative aspect-video">
@@ -90,6 +81,7 @@ const MovieList = () => {
                   alt={movie.title}
                   className="w-full h-full object-cover"
                 />
+
                 <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-2 py-1 rounded-md flex items-center gap-1">
                   <Star className="w-4 h-4 text-yellow-500 fill-current" />
                   <span className="text-yellow-500 font-medium">
@@ -97,15 +89,21 @@ const MovieList = () => {
                   </span>
                 </div>
               </div>
+
               <div className="p-4">
-                <h2 className="text-xl font-semibold justify-betwen mb-2">
+                <h2 className="text-xl font-semibold mb-2">
                   {movie.title}
                 </h2>
+
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-gray-400">{movie.year}</span>
+
                   <div className="flex gap-2">
                     {movie.genre.slice(0, 2).map((g) => (
-                      <span key={g} className="text-xs px-2 py-1 bg-zinc-800 rounded-full text-zinc-300">
+                      <span
+                        key={g}
+                        className="text-xs px-2 py-1 bg-zinc-800 rounded-full text-zinc-300"
+                      >
                         {g}
                       </span>
                     ))}
@@ -118,5 +116,4 @@ const MovieList = () => {
       </div>
     </div>
   );
-};
 }

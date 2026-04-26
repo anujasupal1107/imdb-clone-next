@@ -183,32 +183,7 @@ export default async function Page({ params }: { params: Params }) {
               <p className="text-gray-200">{actor.biography}</p>
             </section>
 
-            {/* AWARDS */}
-            {actor.awards && actor.awards.length > 0 && (
-              <section className="mb-10">
-                <h2 className="text-2xl text-white font-bold mb-4">
-                  Awards
-                </h2>
-
-                <div className="space-y-3">
-                  {actor.awards.map((award: any, index: number) => (
-                    <div
-                      key={index}
-                      className="bg-zinc-900 p-4 rounded-lg text-gray-200"
-                    >
-                      <p className="font-semibold text-white">
-                        🏆 {award.name}
-                      </p>
-                      <p>{award.category}</p>
-                      <p className="text-sm text-gray-400">
-                        {award.film} • {award.year}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
+           
             {/* FILMOGRAPHY */}
             <section>
               <h2 className="text-2xl text-white font-bold mb-6">
