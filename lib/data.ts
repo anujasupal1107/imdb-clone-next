@@ -960,8 +960,7 @@ export const actors = [
     "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=1200&q=50",
 
   image:
-    "https://images.unsplash.com/photo-1502767089025-6572583495b3?auto=format&fit=crop&w=400&q=50",
-
+    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
   awards: [
     {
       name: "Academy Award",
@@ -1032,8 +1031,7 @@ export const actors = [
     "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=50",
 
   image:
-    "https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=400&q=50",
-
+"https://images.unsplash.com/photo-1527980965255-d3b416303d12",
   awards: [
     {
       name: "Academy Award",
@@ -1104,8 +1102,7 @@ export const actors = [
     "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=50",
 
   image:
-    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=50",
-
+"https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
   awards: [
     {
       name: "Academy Award",
