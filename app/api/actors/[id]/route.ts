@@ -3,9 +3,9 @@ import { actors } from "@/lib/data";
 
 export async function GET(
   req: Request,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } } // ✅ FIXED
 ) {
-  const { id } = await context.params; // ✅ correct
+  const { id } = params; // ✅ NO await
 
   const actor = actors.find((a) => a.id.toString() === id);
 
