@@ -960,7 +960,7 @@ export const actors = [
     "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=1200&q=50",
 
   image:
-    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+"https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
   awards: [
     {
       name: "Academy Award",
