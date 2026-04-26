@@ -5,17 +5,19 @@ export async function getActor(id: string) {
       "http://localhost:3000";
 
     const res = await fetch(`${baseUrl}/api/actors/${id}`, {
-      next: { revalidate: 60 },
+      cache: "no-store", // 🔥 IMPORTANT
     });
 
     if (!res.ok) {
-      console.error("API failed:", res.status);
+      console.error("API error:", res.status);
       return null;
     }
 
-    return res.json();
+    const data = await res.json();
+
+    return data;
   } catch (error) {
-    console.error("Fetch error:", error);
+    console.error("Fetch failed:", error);
     return null;
   }
 }
