@@ -53,32 +53,6 @@ export default function MovieList() {
       year: 2023,
       genre: ["Crime", "Drama", "History"],
     },
-    {id: 9,
-      title: "The Shawshank Redemption",
-      rating: 9.3,
-      image:
-        "https://images.unsplash.com/photo-1534809027769-b00d750a6bac?auto=format&fit=crop&w=800&q=80",
-      year: 1994,
-      genre: ["Biography", "Drama", "History"],
-    },
-    {
-      id: 10,
-      title: "The Godfather",
-      rating: 9.2,
-      image:
-        "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80",
-      year: 1972,
-      genre: ["Comedy", "Drama", "Romance"],
-    },
-    {
-      id: 11,
-      title: "The Dark Knight",
-      rating: 9.0,
-      image:
-        "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80",
-      year: 2008,
-      genre: ["Crime", "Drama", "History"],
-    },
   ];
 
   return (
