@@ -6,7 +6,7 @@ import { getMessages } from "@/lib/getMessages";
 import { getActor } from "@/lib/getActor";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 60;
+export const revalidate = 0;
 
 // ✅ Define types
 type Params = {
