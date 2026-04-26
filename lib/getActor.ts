@@ -1,7 +1,7 @@
 import { actors } from "@/lib/data";
 
-// ✅ Automatically infer correct type from your data
-type Actor = (typeof actors)[number];
+// ✅ Infer correct type from your data
+export type Actor = (typeof actors)[number];
 
 export async function getActor(id: string): Promise<Actor | null> {
   try {

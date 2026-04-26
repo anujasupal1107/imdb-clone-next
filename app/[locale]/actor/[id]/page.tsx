@@ -3,33 +3,14 @@ import Image from "next/image";
 import PageWrapper from "@/components/PageWrapper";
 import FilmographyExplorer from "@/components/FilmographyExplorer";
 import { getMessages } from "@/lib/getMessages";
-import { getActor } from "@/lib/getActor";
+import { getActor, Actor } from "@/lib/getActor"; // ✅ import type
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-// ✅ Define types
 type Params = {
   id: string;
   locale?: string;
-};
-
-type Actor = {
-  name: string;
-  biography: string;
-  image: string;
-  birthDate?: string;
-  birthPlace?: string;
-  stats?: {
-    avgRating?: number;
-    totalAwards?: number;
-    moviesCount?: number;
-  };
-  socialMedia?: {
-    instagram?: string;
-    twitter?: string;
-  };
-  knownFor?: any[];
 };
 
 // ✅ Metadata
@@ -37,7 +18,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const { id } = params;
 
   try {
-    const actor: Actor | null = await getActor(id);
+    const actor = await getActor(id);
 
     if (!actor) return { title: "Actor Not Found" };
 
@@ -76,7 +57,6 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
-      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -90,7 +70,6 @@ export default async function Page({ params }: { params: Params }) {
       />
 
       <PageWrapper>
-        {/* HERO */}
         <div className="relative w-full h-[320px] md:h-[400px] mb-8 rounded-xl overflow-hidden">
           <Image
             src="/cover.jpg"
@@ -127,9 +106,7 @@ export default async function Page({ params }: { params: Params }) {
           </div>
         </div>
 
-        {/* GRID */}
         <div className="grid md:grid-cols-3 gap-8">
-          {/* LEFT */}
           <div>
             <div className="sticky top-24 space-y-6">
               <div className="bg-zinc-900 p-6 rounded-xl">
@@ -179,7 +156,6 @@ export default async function Page({ params }: { params: Params }) {
             </div>
           </div>
 
-          {/* RIGHT */}
           <div className="md:col-span-2">
             <section className="mb-10">
               <h2 className="text-2xl text-white font-bold mb-4">
