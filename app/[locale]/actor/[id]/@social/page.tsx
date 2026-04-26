@@ -1,30 +1,29 @@
 import { Instagram, Twitter, Film } from "lucide-react";
 import { getActor } from "@/lib/getActor";
 
-export default async function SocialPage({
-  params,
-}: {
+interface SocialPageProps {
   params: { id: string };
-}) {
-  const { id } = params;
+}
 
-  // ✅ NO FETCH (fix Vercel error)
-  const actor = await getActor(id);
+export default async function SocialPage({ params }: SocialPageProps) {
+  const actor = await getActor(params.id);
 
   if (!actor) {
-    return <div className="text-gray-400">No social data</div>;
+    return <div className="text-gray-400">Actor not found</div>;
   }
 
-  if (!actor.socialMedia) {
+  const social = actor.socialMedia;
+
+  if (!social) {
     return <div className="text-gray-400">No social links available</div>;
   }
 
   return (
     <div className="grid sm:grid-cols-2 gap-4">
-      {/* INSTAGRAM */}
-      {actor.socialMedia?.instagram && (
+      {/* Instagram */}
+      {social.instagram && (
         <a
-          href={actor.socialMedia.instagram}
+          href={social.instagram}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 p-4 rounded-xl flex items-center gap-4 hover:scale-[1.02] transition"
@@ -39,10 +38,10 @@ export default async function SocialPage({
         </a>
       )}
 
-      {/* TWITTER */}
-      {actor.socialMedia?.twitter && (
+      {/* Twitter */}
+      {social.twitter && (
         <a
-          href={actor.socialMedia.twitter}
+          href={social.twitter}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 p-4 rounded-xl flex items-center gap-4 hover:scale-[1.02] transition"
@@ -58,9 +57,9 @@ export default async function SocialPage({
       )}
 
       {/* IMDb */}
-      {actor.socialMedia?.imdb && (
+      {social.imdb && (
         <a
-          href={actor.socialMedia.imdb}
+          href={social.imdb}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 p-4 rounded-xl flex items-center gap-4 hover:scale-[1.02] transition"

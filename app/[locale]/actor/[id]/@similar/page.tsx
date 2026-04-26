@@ -1,49 +1,36 @@
-import { Award } from "lucide-react";
 import { getActor } from "@/lib/getActor";
+import Link from "next/link";
 
-export default async function AwardsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = params;
+interface SimilarPageProps {
+  params: {
+    id: string;
+  };
+}
 
-  // ✅ NO FETCH (fixes Vercel error)
-  const actor = await getActor(id);
+export default async function SimilarPage({ params }: SimilarPageProps) {
+  const actor = await getActor(params.id);
 
   if (!actor) {
-    return <div className="text-gray-400">Actor not found</div>;
+    return <div className="text-gray-400">Not found</div>;
   }
 
-  if (!actor.awards || actor.awards.length === 0) {
-    return <div className="text-gray-400">No awards available</div>;
+  const knownFor = actor.knownFor ?? [];
+
+  if (knownFor.length === 0) {
+    return <div className="text-gray-400">No movies found</div>;
   }
 
   return (
-    <div className="grid gap-4">
-      {actor.awards.map((a: any, i: number) => (
-        <div
-          key={i}
-          className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 rounded-xl p-4 flex gap-4 hover:shadow-lg hover:shadow-black/30 transition"
+    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {knownFor.map((movie: any, i: number) => (
+        <Link
+          key={movie.id ?? i}
+          href={`/movies/${movie.id}`}
+          className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 hover:scale-[1.02] transition"
         >
-          <div className="bg-yellow-500/20 p-3 rounded-lg">
-            <Award className="text-yellow-500" />
-          </div>
-
-          <div>
-            <p className="font-semibold text-lg">
-              {a?.name || "Unknown Award"}
-            </p>
-
-            <p className="text-gray-400 text-sm">
-              {a?.year || "—"} • {a?.category || "—"}
-            </p>
-
-            <p className="text-gray-300 text-sm mt-1">
-              Film: {a?.film || "N/A"}
-            </p>
-          </div>
-        </div>
+          <p className="font-semibold">{movie.title}</p>
+          <p className="text-sm text-gray-400">{movie.year || "—"}</p>
+        </Link>
       ))}
     </div>
   );
