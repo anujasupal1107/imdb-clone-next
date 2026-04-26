@@ -15,6 +15,7 @@ import WatchlistButton from "@/components/watchlistButton";
 import ReviewForm from "@/components/ReviewForm";
 export const dynamic = "force-dynamic";
 
+
 export default function MovieDetails({ params }: any) {
   const { id } = params;
 
@@ -312,6 +313,7 @@ export default function MovieDetails({ params }: any) {
 
   return (
     <div>
+      {/* HERO */}
       <div className="relative h-[90vh]">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -322,6 +324,7 @@ export default function MovieDetails({ params }: any) {
 
         <div className="relative container mx-auto px-4 h-full flex items-end pb-12">
           <div className="grid md:grid-cols-3 gap-8 items-end">
+            {/* LEFT POSTER */}
             <div className="hidden md:block">
               <img
                 src={movie.image}
@@ -330,13 +333,12 @@ export default function MovieDetails({ params }: any) {
               />
             </div>
 
+            {/* BASIC INFO */}
             <div className="md:col-span-2">
               <div className="flex flex-wrap items-center gap-4 mb-4">
                 <div className="flex items-center gap-2 bg-black/50 px-3 py-1.5 rounded-full">
                   <Star className="w-5 h-5 text-yellow-500" />
-                  <span className="text-yellow-500 font-semibold">
-                    {movie.rating} Rating
-                  </span>
+                  <span>{movie.rating} Rating</span>
                 </div>
 
                 <div className="flex items-center gap-2 bg-black/50 px-3 py-1.5 rounded-full">
@@ -358,7 +360,6 @@ export default function MovieDetails({ params }: any) {
                 <a
                   href={movie.trailer}
                   target="_blank"
-                  rel="noopener noreferrer"
                   className="bg-yellow-500 text-black px-8 py-3 rounded-lg flex items-center gap-2"
                 >
                   <Play className="w-5 h-5" />
@@ -366,10 +367,7 @@ export default function MovieDetails({ params }: any) {
                 </a>
 
                 <WatchlistButton
-                  movie={{
-                    id: String(movie.id),
-                    title: movie.title,
-                  }}
+                  movie={{ id: String(movie.id), title: movie.title }}
                 />
 
                 <button className="bg-gray-800 px-4 py-3 rounded-lg">
@@ -381,42 +379,59 @@ export default function MovieDetails({ params }: any) {
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-12">
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4">Overview</h2>
-          <p className="text-gray-300">{movie.description}</p>
-        </section>
+      {/* MAIN CONTENT */}
+      <main className="container mx-auto px-4 py-12 grid md:grid-cols-3 gap-10">
 
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">User Reviews</h2>
-          <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-6">
-            <ReviewForm movieId={id} />
-          </div>
-        </section>
+        {/* LEFT SIDE */}
+        <div>
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold mb-4">Overview</h2>
+            <p className="text-gray-300">{movie.description}</p>
+          </section>
+        </div>
 
-        <section>
-          <h2 className="text-2xl font-bold mb-6">Top Cast</h2>
-          <div className="grid grid-cols-2 gap-6">
-            {movie.cast.map((actor) => (
-              <Link
-                key={actor.id}
-                href={`/en/actor/${actor.id}`}
-                className="bg-gray-800 p-4 rounded-lg flex gap-4"
-              >
-                <img
-                  src={actor.image}
-                  className="w-24 h-24 rounded-xl object-cover"
-                  alt={actor.name}
-                />
-                <div>
-                  <h3 className="font-semibold">{actor.name}</h3>
-                  <p className="text-gray-400">{actor.role}</p>
-                  <p className="text-sm text-gray-400">{actor.bio}</p>
+        {/* RIGHT SIDE (ADDED FIX) */}
+        <div className="md:col-span-2">
+
+          {/* AWARDS (NOW RESTORED) */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">
+              Awards & Recognition
+            </h2>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {movie.awards.map((award, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-lg"
+                >
+                  <Award className="w-5 h-5 text-yellow-500" />
+                  <span>{award}</span>
                 </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+              ))}
+
+              <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-lg">
+                <BarChart3 className="w-5 h-5 text-green-500" />
+                <span>Metacritic: {movie.metacriticScore}/100</span>
+              </div>
+
+              <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-lg">
+                <BarChart3 className="w-5 h-5 text-red-500" />
+                <span>Rotten Tomatoes: {movie.rottenTomatoesScore}%</span>
+              </div>
+            </div>
+          </section>
+
+          {/* REVIEWS (UNCHANGED UI) */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">User Reviews</h2>
+
+            <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-6">
+              <ReviewForm movieId={id} />
+            </div>
+          </section>
+
+        </div>
       </main>
     </div>
   );
