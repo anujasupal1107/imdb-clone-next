@@ -1,32 +1,26 @@
 import { Award } from "lucide-react";
-
+import { getActor } from "@/lib/getActor";
 
 export default async function AwardsPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
 
-  // ✅ fetch actor
-  const res = await fetch(
-    `http://localhost:3000/api/actors/${id}`,
-    { cache: "no-store" }
-  );
+  // ✅ NO FETCH (fixes Vercel error)
+  const actor = await getActor(id);
 
-  if (!res.ok) {
-    return <div className="text-gray-400">No awards found</div>;
+  if (!actor) {
+    return <div className="text-gray-400">Actor not found</div>;
   }
 
-  const actor = await res.json();
-
-  if (!actor?.awards || actor.awards.length === 0) {
+  if (!actor.awards || actor.awards.length === 0) {
     return <div className="text-gray-400">No awards available</div>;
   }
 
   return (
     <div className="grid gap-4">
-
       {actor.awards.map((a: any, i: number) => (
         <div
           key={i}
@@ -51,7 +45,6 @@ export default async function AwardsPage({
           </div>
         </div>
       ))}
-
     </div>
   );
 }

@@ -1,30 +1,28 @@
 import { Instagram, Twitter, Film } from "lucide-react";
+import { getActor } from "@/lib/getActor";
 
 export default async function SocialPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
 
-  const res = await fetch(`http://localhost:3000/api/actors/${id}`, {
-    cache: "no-store",
-  });
+  // ✅ NO FETCH (fix Vercel error)
+  const actor = await getActor(id);
 
-  if (!res.ok) {
+  if (!actor) {
     return <div className="text-gray-400">No social data</div>;
   }
 
-  const actor = await res.json();
-
-  if (!actor?.socialMedia) {
+  if (!actor.socialMedia) {
     return <div className="text-gray-400">No social links available</div>;
   }
 
   return (
     <div className="grid sm:grid-cols-2 gap-4">
       {/* INSTAGRAM */}
-      {actor.socialMedia.instagram && (
+      {actor.socialMedia?.instagram && (
         <a
           href={actor.socialMedia.instagram}
           target="_blank"
@@ -42,7 +40,7 @@ export default async function SocialPage({
       )}
 
       {/* TWITTER */}
-      {actor.socialMedia.twitter && (
+      {actor.socialMedia?.twitter && (
         <a
           href={actor.socialMedia.twitter}
           target="_blank"
@@ -60,7 +58,7 @@ export default async function SocialPage({
       )}
 
       {/* IMDb */}
-      {actor.socialMedia.imdb && (
+      {actor.socialMedia?.imdb && (
         <a
           href={actor.socialMedia.imdb}
           target="_blank"
